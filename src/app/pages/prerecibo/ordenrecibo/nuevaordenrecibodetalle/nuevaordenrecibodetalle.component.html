@@ -1,0 +1,100 @@
+
+    
+<!--     
+    <div class="light-font">
+        <nav aria-label="breadcrumb" role="navigation">
+          <ol class="breadcrumb primary-color">
+        <li class="breadcrumb-item" [routerLink]="['/recibo/listaordenrecibo']" routerLinkActive="router-link-active" >Listado de órdenes</li>
+        <li class="breadcrumb-item" [routerLink]="['/recibo/verordenrecibo', this.model.OrdenReciboId  ]">Detalle de la Orden de Recibo</li>
+        <li class="breadcrumb-item active">Nuevo Detalle</li>
+      </ol>
+    </nav>
+  </div> -->
+
+
+
+  <div class="page-head">
+    <h2 class="page-head-title">Órdenes de Recibo</h2>
+   <nav aria-label="breadcrumb" role="navigation">
+     <ol class="breadcrumb page-head-nav">
+      <ol class="breadcrumb page-head-nav">
+        <li class="breadcrumb-item"> Recibo</li>
+        <li class="breadcrumb-item"  [routerLink]="['/recibo/listaordenrecibo']" routerLinkActive="router-link-active">Órdenes de Recibo </li>
+        <li class="breadcrumb-item" [routerLink]="['/recibo/verordenrecibo', this.model.OrdenReciboId  ]">Ver Orden de Recibo</li>
+        <li class="breadcrumb-item active">Nuevo Detalle</li>
+        
+      </ol>
+     </ol>
+   </nav>
+ </div>
+  <div class="main-content container-fluid">
+  
+
+      <div class="row">
+    
+        <div class="offset-3 col-md-6">
+        <div class="card card-border-color card-border-color-primary">
+          <div class="card-header">Nueva Orden Detalle<span class="card-subtitle"> Datos de detalle de la orden de recibo</span></div>
+          <div class="card-body ">
+            <form #f="ngForm"  (ngSubmit)="registrar(f)" >
+
+              <div class="form-group">
+                <label for="linea">Línea:</label>
+                
+               <input pInputText   size="15" class="form-control col-md-12"  disabled required [(ngModel)]="model.linea" #linea="ngModel"  name="linea" type="text">
+            
+                  <div class="alert alert-danger" *ngIf="linea.errors  "> 
+                      <div *ngIf="linea.errors.minlength">
+                      Usuario debe tener mas de 5 caracteres.
+                      </div>
+                  </div>	
+            </div>
+                
+            <div class="form-group">
+              <label for="codigo">SKU:</label>
+               <div class="row">
+                  <input pInputText  size="15"  class="form-control col-md-11" required  [(ngModel)]="model.codigo"  name="codigo"  (blur)="onBlurMethod($event.target.value)" type="text">
+                  <button  class="btn btn-primary"  (click)="openDialog()" type="button"><i class="fa fa-search"></i></button>
+                </div>
+          </div>
+
+                
+          <div class="form-group">
+              <label for="descripcionLarga">Descripción Larga:</label>
+              <input pInputText   size="15"  class="form-control col-md-12" readonly required [(ngModel)]="model.descripcionLarga"  #username="ngModel"  name="descripcionLarga" type="text">
+          </div>
+          <div class="form-group">
+              <label for="estadoId">Estado del Recibo:</label>
+              <p-dropdown [options]="estados" name="estados"  [style]="{'width':'100%'}" 
+              scrollHeight="40vh" class="input-form-field  col-md-12" [(ngModel)]="model.estadoId">
+                <ng-template let-item pTemplate="selectedItem">
+                  <span style="vertical-align:left;">{{item.label}}</span>
+              </ng-template>
+              </p-dropdown>
+          </div>
+          <div class="form-group">
+              <label for="cantidad">Cantidad:</label>
+                  <input pInputText   size="15" class="form-control col-md-12" autocomplete="off" type="text" (keypress)="numberOnly($event)" maxlength="6" required [(ngModel)]="model.cantidad"  #cantidad="ngModel"  name="cantidad" >
+          </div>
+          <div class="form-group">
+            <label for="cantidad">Referencia:</label>
+                <input pInputText   size="15" class="form-control col-md-12" autocomplete="off" type="text" maxlength="18"  [(ngModel)]="model.referencia"  #referencia="ngModel"  name="referencia" >
+        </div>
+          <div class="row pt-2 mt-1">
+              <div class="col-sm-6 pl-0">
+                <p class="text-right">
+                  <button  [disabled]="!f.valid" class="btn btn-space btn-primary" type="submit">Guardar</button>
+                  <button  (click)="cancel()" class="btn btn-space btn-secondary">Cancel</button>
+                </p>
+              </div>
+            </div>
+            </form>
+          </div>
+          </div>
+        </div>
+
+      </div>
+  
+      
+  </div>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>

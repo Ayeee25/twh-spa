@@ -1,0 +1,226 @@
+<div class="page-head">
+  <h2 class="page-head-title"> Reporte de Servicio al {{ servicios[0].fechaFin | date: 'dd/MM/yyyy'  }}</h2>
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb page-head-nav">
+      <li class="breadcrumb-item"><a href="#">Reporte de servicio </a></li>
+      
+    </ol>
+  </nav>
+</div>
+        <div class="main-content container-fluid col-12">
+
+          
+<div class="row mt-2">
+  <div class="col-12 col-md-6 col-lg-6 col-xl-3">
+    <div class="card gradient-very-blue bubble border-0">
+      <div class="card-body card-block p-3">
+        <div class="media align-items-center">
+          <div class="media-body text-left">
+            <p class="text-white">Total S/. </p>
+            <h3 class="text-white mb-0">{{  totalsoles | number:'1.0-2' }}</h3>
+            <small class="text-white">{{ simbol1 }} {{porcentajesoles | number:'1.0-2' }}% Desde el mes pasado</small>
+          </div>
+          <div class="w-icon"><i class="zmdi zmdi-shopping-basket text-white"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6 col-lg-6 col-xl-3">
+    <div class="card bubble gradient-very-blue border-0">
+      <div class="card-body card-block p-3">
+        <div class="media align-items-center">
+          <div class="media-body text-left">
+            <p class="text-white">Total $USD</p>
+            <h3 class="text-white mb-0">{{  totaldolares | number:'1.0-2' }}</h3>
+            <small class="text-white">{{ simbol2 }} {{porcentajedolares | number:'1.0-2' }}% Desde el mes pasado</small>
+          </div>
+          <div class="w-icon"><i class="zmdi zmdi-accounts-alt text-white"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6 col-lg-6 col-xl-3">
+    <div class="card gradient-violet bubble border-0">
+      <div class="card-body card-block p-3">
+        <div class="media align-items-center">
+          <div class="media-body text-left">
+            <p class="text-white">Goals</p>
+            <h4 class="text-white mb-0"> {{ porcentajeGoal | number:'1.0-2'  }} % </h4>
+            <h3 class="text-white mb-0"></h3>
+            <small class="text-white">  S/.300,000.00 Objetivo Mensual</small>
+          </div>
+          <div class="w-icon"><i class="zmdi zmdi-balance-wallet text-white"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6 col-lg-6 col-xl-3">
+    <div class="card gradient-ibiza bubble border-0">
+      <div class="card-body card-block p-3">
+        <div class="media align-items-center">
+          <div class="media-body text-left">
+            <p class="text-white">Totalizado</p>
+            <h4 class="text-white mb-0"> S/. {{  totaltotal | number:'1.0-2'  }}</h4>
+            <small class="text-white">{{ simbol3 }}   {{porcentajetotaltotal | number:'1.0-2' }} % Desde el mes pasado</small>
+          </div>
+          <div class="w-icon"><i class="zmdi zmdi-chart-donut text-white"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+
+<div class="row">
+  <div class="col-12 col-lg-6 col-xl-6">
+    <div class="card">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h6 class="text-uppercase mb-0">Detalle Servicio</h6>
+          </div>
+          <div class="col">
+            <ul class="list-inline mb-0 d-flex justify-content-end">
+              <li class="list-inline-item"><span class="gradient-scooter d-inline-block rounded-circle mr-1"
+                  style="width:13px; height:13px;"></span> Ventas Soles</li>
+              <li class="list-inline-item"><span class="gradient-orange d-inline-block rounded-circle mr-1"
+                  style="width:13px; height:13px;"></span> Ventas Dólares</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="chart-container" *ngFor="let item of this.servicios">
+
+   
+              <div class="media align-items-center">
+                <!-- <h2 class="mb-0">{{ item.propietario }}</h2> -->
+                <!-- <img src="assets\images\avatars\avatar-11.png" class="rounded-circle customer-img" alt="user avatar"> -->
+                <div class="media-body ml-3">
+                  <h5 class="mb-0">{{ item.propietario }}</h5>
+                  <p class="mb-0 extra-small-font">{{ item.simboloMoneda }} {{ item.subTotal | number:'1.0-0'  }}</p>
+                </div>
+                <!-- <button class="btn btn-sm btn-round btn-primary">Add</button> -->
+              </div>
+              <hr>
+             
+<!--           
+          <section class=" widget widget-card  bg-gray col-12">
+              
+              
+              
+            <div class="widget-body clearfix">
+    
+                <div class="bg-gray row  col-12">
+                    <div class="col-xs-1">
+                      <span class="widget-icon">
+                          <i class="fa fa-id-card"></i>
+                      </span>
+                  </div>
+                  <div class="col-5">
+                    <p class="h5 no-margin fw-normal"> {{ item.propietario }} </p>
+                  </div>
+    
+            
+                  <div class="col-3">
+                    <div class="media-body text-left">
+                      <p class="text-white"></p>
+                      <h5 class="text-white mb-0">{{ item.simboloMoneda }} {{ item.subTotal | number:'1.0-0'  }}</h5>
+                      <small class="text-white">+42% Desde el mes pasado</small>
+                    </div>
+                    
+                  </div>
+                   <div class="col-3">
+                    
+                    <p class="h5 no-margin fw-normal"> S/. {{ item.totalsoles | number:'1.0-0' }} </p>
+                  </div> 
+                
+                </div>
+            </div>
+          </section> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6 col-xl-6">
+    <div class="card ">
+      <div class="card-header text-uppercase">Ventas Mensuales</div>
+      <div class="card-body">
+        <div class="chart-container" >
+       
+          <div class="card">
+            <h5>Basic</h5>
+            <p-chart type="line" [data]="basicData" [options]="basicOptions"></p-chart>
+        </div>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+
+          <!-- <div class="row">
+                <section class=" widget widget-card  bg-primary col-12">
+                    
+                    
+                    
+                  <div class="widget-body clearfix">
+                        <div class="bg-primary row col-12">
+
+                            <div class="col-5">
+                              <h5 class="no-margin"> </h5>
+                              <p class="h4 no-margin fw-normal"> Propietario </p>
+                              </div> 
+
+                            
+                              <div class="col-3">
+                                <h6 class="no-margin"></h6>
+                                <p class="h4 no-margin fw-normal">  Total S/. </p>
+                                </div> 
+
+
+                              <div class="col-3">
+                              <h6 class="no-margin"></h6>
+                              <p class="h4 no-margin fw-normal">  Total $USD </p>
+                              </div> 
+                        </div>
+                  </div>
+                </section>
+
+              </div>  
+
+                  <div class="row" *ngFor="let item of this.servicios">
+                    <section class=" widget widget-card  bg-gray col-12">
+              
+              
+              
+                      <div class="widget-body clearfix">
+              
+                          <div class="bg-gray row  col-12">
+                              <div class="col-xs-1">
+                                <span class="widget-icon">
+                                    <i class="fa fa-id-card"></i>
+                                </span>
+                            </div>
+                            <div class="col-5">
+                              <h5 class="no-margin"> </h5>
+                              <p class="h5 no-margin fw-normal"> {{ item.propietario }} </p>
+                            </div>
+              
+               
+                            <div class="col-3">
+                              <h6 class="no-margin"></h6>
+                              <p class="h5 no-margin fw-normal"> S/. {{ item.subTotal | number:'1.0-0'  }}  </p>
+                            </div>
+                  
+                          
+                          </div>
+                      </div>
+                    </section>
+                  </div>
+     
+        </div> -->
+
+
+
+

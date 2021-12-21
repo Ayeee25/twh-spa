@@ -1,0 +1,150 @@
+
+<div class="page-head">
+    <h2 class="page-head-title">Acomodo de Pallets</h2>
+    <nav aria-label="breadcrumb" role="navigation">
+      <ol class="breadcrumb page-head-nav">
+        <li class="breadcrumb-item"><a [routerLink]="['/recibo/listaordenrecibida', this.EquipoTransporteId]" routerLinkActive="router-link-active" >Equipos de Transporte</a></li>
+        <li class="breadcrumb-item active">Acomodo</li>
+      </ol>
+    </nav>
+ </div>
+
+<div class="main-content container-fluid">
+  <!-- <p-steps [model]="pasos"  [(activeIndex)]="activeIndex" [readonly]="false"></p-steps> -->
+  <div class="row ">
+    <div class="col-md-12">
+      <p-toolbar>
+        <div class="ui-toolbar-group-right">
+            <!-- <button [disabled]="orden.nombreEstado != 'Asignado'" pButton type="button" label="Terminar" (click)="terminar()" icon="pi pi-check" iconPos="left"></button> -->
+            <button  (click)="asignarUbicacion()"   [disabled]="inventarios != null" class="btn btn-space btn-primary" type="button">Guardar</button>
+            <button (click)="deshacer()" class="btn btn-space btn-secondary"> Deshacer</button>
+        </div>
+      </p-toolbar>
+    </div>
+</div>
+    <div class="row">
+        <div  class="col-md-4">
+            <div class="card card-border-color card-border-color-primary">
+              <div class="card-header card-header-divider">
+
+              <div class="row">
+                <b> Inventario de la Orden de Recibo  </b>  
+              </div>
+              </div>
+
+
+
+
+              <div class="card-body  ui-g">
+                  
+                    <div *ngIf="inventarios" style="overflow-y: scroll; height:400px;" class="ui-g-12 ui-md-12 ui-g-nopad drag-column">
+                      <ul  style="margin:0;padding:0">
+                          <li *ngFor="let car of inventarios" class="ui-helper-clearfix" pDraggable="inventario"
+                              (onDragStart)="dragStart($event,car)" (onDragEnd)="dragEnd($event)">
+                              <i class="pi pi-plus" style="float:right;font-size: 32px;"></i>
+                               <img width="60px" height="60px" src="assets/img/pallet.png" style="float:left" draggable="false"> 
+                              <div style="margin:2px 0 0 8px;float:left">{{car.lodNum}} - {{car.referencia}}</div>
+                              <div style="margin:2px 0 0 8px;float:left">{{car.descripcionLarga}} - {{car.codigoHuella}} : {{car.untQty}}</div>
+                          </li>
+                      </ul>
+                   </div>
+                   <div *ngIf="inventarios == null" style="overflow-y: scroll; height:400px;" class="ui-g-12 ui-md-12 ui-g-nopad drag-column">
+                    <ul  style="margin:0;padding:0">
+                      <li  class="ui-helper-clearfix"     >
+                           
+                          <div style="margin:2px 0 0 8px;float:left">No hay mas pallets pendientes de acomodo</div>
+                          
+                      </li>
+                  </ul>
+                 </div>
+                   
+             </div>
+          </div>
+       </div>
+       <div class="col-md-8">
+            <div class="card card-border-color card-border-color-primary">
+                <div class="card-header card-header-divider">Acomodo<span class="card-subtitle">Selecciona una ubicación para el pallet</span></div>
+                  <div class="card-body" >
+                      <div class="row">
+                      <div class="col-md-6">
+                        <h5>Área :</h5>
+                        <p-dropdown name="almacenes" [options]="areas"  [(ngModel)]="model.areaId"  required
+                            scrollHeight="40vh" class="input-form-field"  (onChange)="onChange($event)"    required   [style]="{'width':'100%'}"  [resetFilterOnHide]="false" 
+                            [hideTransitionOptions]="'0ms'"
+                            [showTransitionOptions]="'0ms'" 
+                            placeholder="seleccione un área"  
+                            filter="false">
+                                <ng-template let-item pTemplate="selectedItem">
+                                    <span style="vertical-align:left;">{{item.label}}</span>
+                                </ng-template>
+                          </p-dropdown>
+                      </div>
+
+                      <div class="col-md-3">
+
+                      <h5>Columna  :</h5>
+                      <p-dropdown name="columnas" [options]="columnas"  [(ngModel)]="model.ColumnaId"  required
+                          scrollHeight="40vh" class="input-form-field"  (onChange)="onChangeColumna($event)"    required   [style]="{'width':'100%'}"  [resetFilterOnHide]="false" 
+                          [hideTransitionOptions]="'0ms'"
+                          [showTransitionOptions]="'0ms'" 
+                          placeholder="seleccione un nivel"  
+                          filter="false">
+                              <ng-template let-item pTemplate="selectedItem">
+                                  <span style="vertical-align:left;">{{item.label}}</span>
+                              </ng-template>
+                        </p-dropdown>
+
+                      </div>
+                      <div class="col-md-3">
+                      <h5>Fila  :</h5>
+                      <p-dropdown name="niveles" [options]="niveles"  [(ngModel)]="model.nivelId"  required
+                          scrollHeight="40vh" class="input-form-field"  (onChange)="onChangeNivel($event)"    required   [style]="{'width':'100%'}"  [resetFilterOnHide]="false" 
+                          [hideTransitionOptions]="'0ms'"
+                          [showTransitionOptions]="'0ms'" 
+                          placeholder="seleccione un nivel"  
+                          filter="false">
+                              <ng-template let-item pTemplate="selectedItem">
+                                  <span style="vertical-align:left;">{{item.label}}</span>
+                              </ng-template>
+                        </p-dropdown>
+                      </div>
+
+                      </div>
+
+                      <!-- <div class="row"> -->
+                          <div  class="col-3" *ngFor="let col of master" >
+                              
+                              <div class="col-12" style=" margin-top: 0.1em" *ngFor="let row of col.detalle.reverse()" >
+                                  <div   pDroppable="inventario"   (onDrop)="drop(row)" [className]="row.estado=='Lleno' ? 'active1' : 'inactive'"  class="box">{{row.ubicacion}}</div>
+                          
+                              </div>
+                          </div>
+                          <!-- <div  *ngFor="let col of master" >
+                              
+                            <div class="col-12" style=" margin-top: 0.1em" *ngFor="let row of col.detalle.reverse()" >
+                                <div   pDroppable="inventario"   (onDrop)="drop(row)" [className]="row.estado=='Lleno' ? 'active1' : 'inactive'"  class="box">{{row.ubicacion}}</div>
+                        
+                            </div>
+                        </div> -->
+
+                      <!-- </div> -->
+                  </div>
+
+          </div>
+          <div class="row pt-2 pt-sm-5 mt-1">
+            <div class="col-sm-6 pl-0">
+              <p class="text-right">
+             
+              </p>
+            </div>
+          </div>
+      </div> 
+      
+  </div>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+  <p-sidebar [(visible)]="visibleSidebar4" position="bottom" [baseZIndex]="10000">
+    <h1 style="font-weight:normal">Pendiente de acomodo</h1>
+    <!-- <span>  </span> -->
+    <button pButton type="button" (click)="visibleSidebar4 = false" label="OK" class="ui-button-success"></button>
+    <!-- <button pButton type="button" (click)="visibleSidebar4 = false" label="Cancel" class="ui-button-secondary"></button> -->
+  </p-sidebar>

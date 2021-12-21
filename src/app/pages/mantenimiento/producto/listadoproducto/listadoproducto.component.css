@@ -1,0 +1,16 @@
+.mat-fab.mat-primary, .mat-flat-button.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary {
+  position: absolute !important; 
+  top:40px !important; 
+  left:-30px !important; 
+  z-index: 10000 !important;
+  background: #fdd835 !important; 
+  color: #000000 !important;
+}
+
+th, td {
+  text-align: left;
+  font-size: 0.85em;
+  height : 5px;
+  /* font-family: "Quicksand", "Trebuchet MS", Arial, Helvetica, sans-serif; */
+  
+}

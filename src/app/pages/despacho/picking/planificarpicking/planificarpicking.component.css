@@ -1,0 +1,32 @@
+
+.mat-row {
+    cursor: pointer;
+  }
+  .mat-column-select {
+    flex: 0 0 60px;
+    text-align: right;
+  }
+
+  .mat-column-numOrden {
+    flex: 1 0 20px;
+    text-align: center;
+  }
+  .mat-column-propietario {
+    flex:1 0 150px;
+
+
+  }
+  .mat-column-Urgente {
+    flex: 0 0 80px;
+
+  }
+
+  .mat-column-EquipoTransporte {
+    flex: 0 0 160px;
+
+  }
+
+  .mat-column-actionsColumn {
+    flex: 0 0 120px;
+
+  }

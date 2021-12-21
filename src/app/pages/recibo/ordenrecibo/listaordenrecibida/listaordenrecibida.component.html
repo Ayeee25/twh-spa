@@ -1,0 +1,135 @@
+
+
+    <!-- <h2 class="page-head-title">Recepción de Órdenes</h2>
+    <div class="light-font">
+        <nav aria-label="breadcrumb" role="navigation">
+            <ol class="breadcrumb primary-color">
+                <li class="breadcrumb-item" [routerLink]="['/recibo/equipotransporteentrante']" routerLinkActive="router-link-active" >Listado de órdenes de recibo</li>
+                
+              </ol>
+        </nav>
+      </div> -->
+
+      <div class="page-head">
+        <h2 class="page-head-title">Equipos de Transporte</h2>
+       <nav aria-label="breadcrumb" role="navigation">
+         <ol class="breadcrumb page-head-nav">
+          <ol class="breadcrumb page-head-nav">
+            <li class="breadcrumb-item"> Recibo</li>
+            <li class="breadcrumb-item" [routerLink]="['/recibo/equipotransporteentrante']" routerLinkActive="router-link-active" >Equipos de Transporte </li>
+            <li class="breadcrumb-item active">Ordenes de Recibo por Equipo</li>
+            
+          </ol>
+         </ol>
+       </nav>
+     </div>
+ 
+ <div class="main-content container-fluid">
+
+ <div class="col-md-12">
+ 
+ 
+   <div class="card card-border-color card-border-color-primary">
+     <div class="card-header card-header-divider">
+         
+      <div class="row">
+           <b> Ordenes de Recibo |  </b>  <span class="card-subtitle">   Listado de ordenes de recibo del sistema</span>
+         </div>
+       </div>
+ 
+       <div class="row">
+        <div class="col-md-1">
+            
+        </div>
+        <div class="col-md-8">
+            <button class="btn-buttons btn-primary"   (click)="equipotransporte()"  type="button"> Regresar al listado de transportes</button>  
+            
+        </div>
+
+       
+        
+    </div>
+ 
+     <div class="card-body">
+         
+         <div  class="mat-elevation-z8">
+             <mat-table #table [dataSource] = "listData" matSort >
+                <ng-container matColumnDef="almacen">
+                   <mat-header-cell *matHeaderCellDef mat-sort-header >  Almacén </mat-header-cell>
+                   <mat-cell *matCellDef="let user"> {{user.almacen}} </mat-cell>
+                 </ng-container>
+ 
+ 
+                <ng-container matColumnDef="numOrden">
+                 <mat-header-cell *matHeaderCellDef mat-sort-header> N° Orden</mat-header-cell>
+                 <mat-cell  *matCellDef="let orden" > 
+                       <span class="label label-info pull-xs-center">{{orden.numOrden}}</span>
+                 </mat-cell>
+               </ng-container>
+         
+           
+                 <ng-container matColumnDef="propietario">
+                     <mat-header-cell *matHeaderCellDef mat-sort-header >  Propietario </mat-header-cell>
+                     <mat-cell *matCellDef="let user"> {{user.propietario}} </mat-cell>
+                   </ng-container>
+           
+                
+                 <ng-container matColumnDef="nombreEstado">
+                     <mat-header-cell *matHeaderCellDef mat-sort-header> Estado  </mat-header-cell>
+                     <mat-cell *matCellDef="let user"> 
+                        <div *ngIf="user.nombreEstado == 'Asignado' then
+                        Asignado "></div>
+                        <div *ngIf="user.nombreEstado == 'Recibiendo' then
+                        Recibiendo "></div>
+                         <div *ngIf="user.nombreEstado == 'Pendiente Acomodo' then
+                         PendienteAcomodo "></div>
+                         <div *ngIf="user.nombreEstado == 'Pendiente Almacenamiento' then
+                         PendienteAlmacenamiento "></div>
+                         <div *ngIf="user.nombreEstado == 'Almacenado' then
+                        Terminado "></div>
+    
+                        <ng-template #Asignado>  <div  [style.color]="'#FFFFFF'" [style.background-color]="'#676a6c'">{{user.nombreEstado}}     </div>     </ng-template>
+                        <ng-template #Recibiendo>  <div  [style.color]="'#FFFFFF'" [style.background-color]="'#676a6c'">{{user.nombreEstado}}     </div>     </ng-template>
+                        <ng-template #PendienteAcomodo>   <div [style.color]="'#FFFFFF'" [style.background-color]="'#d00101'" >{{user.nombreEstado}}     </div>   </ng-template>  
+                        <ng-template #PendienteAlmacenamiento>   <div [style.color]="'#FFFFFF'" [style.background-color]="'#d00101'" >{{user.nombreEstado}}     </div>   </ng-template>  
+                        <ng-template #Terminado>   <div [style.color]="'#FFFFFF'" [style.background-color]="'#757575'" >{{user.nombreEstado}}     </div>   </ng-template>  
+    
+     
+                     </mat-cell>
+                   </ng-container>
+ 
+                   <ng-container matColumnDef="ubicacion">
+                       <mat-header-cell *matHeaderCellDef mat-sort-header >  Ubicación </mat-header-cell>
+                       <mat-cell *matCellDef="let user"> {{user.ubicacion}} </mat-cell>
+                     </ng-container>
+ 
+                       <ng-container matColumnDef="fechaRegistro">
+                           <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Registro</mat-header-cell>
+                           <mat-cell *matCellDef="let user"> 
+                               {{user.fechaRegistro | date:'dd-MM-yyyy' }} 
+                           </mat-cell>
+                         </ng-container>
+ 
+                   <ng-container matColumnDef="actionsColumn">
+                       <mat-header-cell *matHeaderCellDef>
+                          Acciones
+                       </mat-header-cell>
+                       <mat-cell *matCellDef="let row">
+                           <button  [disabled]="row.nombreEstado == 'Almacenado' || row.nombreEstado == 'Pendiente Acomodo' || row.nombreEstado == 'Pendiente Almacenamiento' " class="btn btn-space btn-outline-primary" ngbTooltip="Iniciar recibo múltiple"  (click)="identificar_multiple(row.ordenReciboId)"  type="button"><i class="fas fa-sign-in-alt"></i></button>
+                           <button  [disabled]="row.nombreEstado == 'Almacenado' || row.nombreEstado == 'Recibiendo' || row.nombreEstado == 'Pendiente Almacenamiento' || row.nombreEstado == 'Asignado' " class="btn btn-space btn-outline-primary" ngbTooltip="Acomodo"  (click)="acomodo(row.ordenReciboId)"  type="button"><i class="fas fa-archive"></i></button>
+                           <button  [disabled]="row.nombreEstado == 'Almacenado' || row.nombreEstado == 'Pendiente Acomodo' || row.nombreEstado == 'Recibiendo' || row.nombreEstado == 'Asignado'"  class="btn btn-space btn-outline-primary" ngbTooltip="Almacenamiento"  (click)="almacenar(row.ordenReciboId)"  type="button"><i class="fas fa-warehouse"></i></button>
+                       </mat-cell>
+                   </ng-container>
+           
+                  <mat-header-row *matHeaderRowDef="displayedColumns; " ></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: displayedColumns;" >
+                  </mat-row>
+             </mat-table>
+            <mat-paginator [pageSizeOptions]="[ 10, 20, 50, 100]" [pageSize]="10" showFirstLastButtons></mat-paginator>
+           </div>
+     </div>
+   </div>
+ </div>
+</div>
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>

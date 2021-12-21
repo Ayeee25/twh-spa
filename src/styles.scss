@@ -1,0 +1,63 @@
+@import "../node_modules/primeicons/primeicons.css";
+@import "../node_modules/primeng/resources/themes/nova-light/theme.css";
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../src/assets/css/primeflex.min.css";
+@import "../node_modules/ngx-toastr/toastr.css" ;
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+
+.be-user-nav > li.dropdown > a .user-name {
+	margin-left: 8px;
+	display: none;
+	font-size: 1.077rem;
+	line-height: 20px;
+	vertical-align: middle;
+  }
+
+
+body .ui-steps {
+	background-color: white;
+}
+.breadcrumb {
+	display: flex;
+	flex-wrap: wrap;
+	padding: .75rem 1rem;
+	margin-bottom: 1rem;
+	list-style: none;
+	background-color: #3a6998;
+	border-radius: .25rem;
+	cursor: pointer;
+}
+.breadcrumb-item {
+	color: #303030;
+	font-size: 20px;
+	&.active {
+		color: #ffffff;
+		font-size: 20px;
+	}
+	& + .breadcrumb-item {
+		&::before {
+			display: inline-block;
+			padding-right: 0.6154rem;
+			color: #ffffff;
+			content: "-";
+		}
+	}
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-calendars/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-angular-schedule/styles/material.css';
+

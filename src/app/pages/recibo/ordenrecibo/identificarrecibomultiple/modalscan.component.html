@@ -1,0 +1,31 @@
+<div class="p-grid ui-fluid">
+
+    <div class="p-col-6 p-md-4">
+        <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="pi pi-table" style="line-height: 1.25;"></i></span>
+            <input name="productserie"  #productserie (focusout)="RegisterProduct()" [(ngModel)]="model.productserie"  type="text" pInputText >         
+        </div>
+
+    
+    </div>  
+    <div class="p-col-6 p-md-4">
+     
+        <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="pi pi-ticket" style="line-height: 1.25;"></i></span>
+            <input name='macserie' #macserie (focusout)="RegisterMac()" type="text"  [(ngModel)]="model.macserie"  pInputText >         
+        </div>
+
+    </div>
+    <div class="p-col-6 p-md-4">
+      
+        <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="pi pi-bars" style="line-height: 1.25;"></i></span>
+            <input (focusout)="RegisterSerie()" type="text"  [(ngModel)]="model.serie"  pInputText >         
+        </div>
+    </div>
+
+</div>
+
+
+<button pButton type="button" label="Add"></button>
+<button pButton type="button" label="Cancel"></button>

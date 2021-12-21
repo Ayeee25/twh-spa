@@ -1,0 +1,36 @@
+.input-div{
+    display: flex;
+   
+    
+      }
+      .input-form-field{
+          width: 30%;
+          /* margin-left: 10px; */
+          padding: 1px 1px;
+          border-radius: 1px;
+          font-size: 12px;
+       
+          }
+          .input-form-field div.mat-form-field-underline {
+              display: none;
+          }
+          .input-form-field div.mat-form-field-infix{
+              border-top: 5px;
+          }
+          .input-form-field div.mat-form-field-wrapper{
+            padding-bottom: 5px;
+        }
+        .input-form-field div.mat-form-field-suffix button{
+            height: 32px;
+            width: 32px;
+        }
+
+.mat-column-Codigo {
+    flex: 0 0 100px;
+    }
+.mat-column-Linea {
+    flex: 0 0 85px;
+    }
+.mat-column-Descripcion {
+    flex: 0 0 485px;
+    }

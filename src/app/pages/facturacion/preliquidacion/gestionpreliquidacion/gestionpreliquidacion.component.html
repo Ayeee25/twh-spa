@@ -1,0 +1,178 @@
+
+<div class="page-head">
+  <h2 class="page-head-title">Gestión de Liquidación </h2>
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb page-head-nav">
+      <li class="breadcrumb-item"><a href="#">Generar Comprobantes</a></li>
+      <!-- <li class="breadcrumb-item">Listado de Órdenes de Recibo</li>
+      <li class="breadcrumb-item active">Identificar Pallets</li> -->
+    </ol>
+  </nav>
+</div>
+
+<div class="main-content container-fluid">
+
+      <div class="col-md-12">
+    <div class="card card-border-color card-border-color-warning">
+        <div class="card-header">
+                  <b> Filtro de búsqueda  </b>  
+            </div>
+        <div class="card-body">
+            <div class="row">
+          
+              <div class="col-md-1">
+                <label class="col-form-label text-sm-right" for="username">Propietario:</label>
+              </div>
+                <div class="col-md-3">
+                    <p-dropdown [options]="clientes"  [(ngModel)]="model.PropietarioId" 
+                    scrollHeight="40vh" class="input-form-field  col-sm-8"    [style]="{'width':'100%'}"   [resetFilterOnHide]="true" 
+                    [hideTransitionOptions]="'0ms'"
+                    [showTransitionOptions]="'0ms'" 
+                    placeholder="seleccione un cliente"  
+                    filter="true">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span style="vertical-align:middle;">{{item.label}}</span>
+                        </ng-template>
+                     </p-dropdown>
+
+
+                  </div>
+                 
+                    <div class="col-md-1">
+                      <label class="col-form-label text-sm-right" for="username">Estado:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <!-- <label class="control-label" for="username">Estado:</label> -->
+                        
+
+                        <p-dropdown [options]="estados"  [(ngModel)]="model.estadoIdfiltro" 
+                        scrollHeight="40vh" class="input-form-field  col-sm-8"    [style]="{'width':'100%'}"   [resetFilterOnHide]="true" 
+                        [hideTransitionOptions]="'0ms'"
+                        [showTransitionOptions]="'0ms'" 
+                        placeholder="seleccione un estado"  
+                        filter="true">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <span style="vertical-align:middle;">{{item.label}}</span>
+                            </ng-template>
+                         </p-dropdown>
+
+
+                      </div>
+  
+                <div class="col-md-3">
+                   <button class="btn btn-block btn-warning"  (click)="buscar()"  type="button">Buscar</button>
+                </div>
+             
+              </div>
+        </div>
+    </div>
+
+  </div>
+<div class="col-md-12">
+
+  <!-- [hidden]="checkSelects()" -->
+  <div class="card card-border-color card-border-color-warning">
+    <div class="card-header">
+          <div>
+              <b> Órdenes de Salida  </b> <span class="card-subtitle">   Listado de ordenes de salida del sistema</span>
+          </div>
+          <!-- <div>
+              <b> Órdenes seleccionadas  :  {{selection.selected.length}} </b>  <span class="card-subtitle">   Listado de ordenes de salida del sistema</span>
+          </div> -->
+      </div>
+     
+    <div class="row">
+      <div class="col-md-1">
+      </div>
+      <div  class="col-md-3">
+          <button type="button" [swal]='confirmarSwal' ngbTooltip="Generar Factura"  (confirm)="generar()" class="btn btn-block btn-primary"><i class="fa fa-folder"></i> Generar Factura</button>
+      </div>
+     
+    </div>
+
+ 
+    <div class="card-body">
+        <div  class="example-container">
+     
+          <p-table  [columns]="cols"  [scrollable]="true"  [style]="{width:'100%'}" 
+          [value]="preliquidaciones" #dt [paginator]="true" [rows]="20" [resizableColumns]="true" 
+          selectionMode="single" [responsive]="true" [(selection)]="selectedRow" >  
+          
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col *ngFor="let col of columns"   [ngStyle]="{'width': col.width}" >
+            </colgroup>
+        </ng-template>
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                  <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                      {{col.header}}
+                      <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                  </th>
+              </tr>
+              <!-- <tr>
+                    <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                        <input *ngSwitchCase="'shipment'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, 'contains')">
+                        <input *ngSwitchCase="'delivery'" pInputText type="text"  (input)="dt.filter($event.target.value, col.field, 'contains')">
+                    </th>
+                  </tr> -->
+          </ng-template>
+        
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr  [pSelectableRow]="rowData">
+            <!-- <td *ngIf="rowGroupMetadata[rowData.brand].index === rowIndex" [attr.rowspan]="rowGroupMetadata[rowData.brand].size">
+                {{rowData.fecha_incidencia}}
+            </td> -->
+            <td class="ui-resizable-column">  
+              <div class="ui-inputgroup">
+                <!-- <button class="ui-button-secondary" type="button"  pButton (click)="ver(rowData.id)" icon="fa fa-search"></button> -->
+                <button class="ui-button-secondary" type="button"  pButton (click)="eliminar(rowData.id)" icon="fa fa-trash"></button>
+
+              </div>
+          </td>
+            <!-- <td class="ui-resizable-column"> {{rowData.id }}</td> -->
+            <td class="ui-resizable-column"> {{rowData.numLiquidacion  }}</td>
+            <td class="ui-resizable-column"> {{rowData.propietario}} </td>
+            <td  [ngClass]="rowData.estado == 'Programado' ? 'old-car' :  (rowData.estado == 'Entregado'?'very-old-car': null) "> {{rowData.estado}}</td>
+            
+            <td class="ui-resizable-column"> {{rowData.fechaInicio | date: 'dd/MM/yyyy'}}</td>
+            <td class="ui-resizable-column"> {{rowData.fechaFin | date: 'dd/MM/yyyy'}}</td>
+            
+            <!-- <td class="ui-resizable-column"> {{rowData.destinatario}}</td> -->
+    
+            <td class="ui-resizable-column"> {{rowData.fechaLiquidacion   | date: 'dd/MM/yyyy'}}</td>
+            <td class="ui-resizable-column"> {{rowData.subTotal | number : '1.2-2' }} </td>
+            <td class="ui-resizable-column"> {{rowData.igv | number : '1.2-2' }} </td>
+            <td class="ui-resizable-column"> {{rowData.total | number : '1.2-2' }} </td>
+            
+        </tr>
+        </ng-template>
+        </p-table>  
+
+
+         
+
+          </div> 
+        
+    </div>
+   
+  </div>
+</div>
+
+
+</div>
+
+<swal
+  #confirmarSwal
+  title="Confirmar generación Factura"
+  text="¿Esta seguro que desea generar la factura?"
+  type="question"
+
+  >
+</swal>
+
+
+<p-confirmDialog acceptLabel="Si" rejectLabel="No" [style]="{ width: '30vw'}">
+    
+</p-confirmDialog>
+

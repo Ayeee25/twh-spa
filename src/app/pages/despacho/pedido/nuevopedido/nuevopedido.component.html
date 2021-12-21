@@ -1,0 +1,126 @@
+
+  <div class="page-head">
+    <h2 class="page-head-title">Ordenes de Pedido </h2>
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb page-head-nav">
+      <li class="breadcrumb-item "> <a [routerLink]="['/pedido/listadopedido']" routerLinkActive="router-link-active" > Listado de Órdenes de Pedido </a></li>
+      <li class="breadcrumb-item active">Nuevo Pedido</li>
+    </ol>
+  </nav>
+  </div>
+  
+
+<div class="main-content container-fluid">
+
+
+    <div class="col-md-12">
+      <div class="card card-border-color card-border-color-danger">
+        <div class="card-header card-header-divider">Nueva Orden de Pedido<span class="card-subtitle"> Datos de cabecera de la orden de pedido</span></div>
+        <div class="card-body ">
+
+          
+          <div class="ui-g ui-fluid">
+            <div class="col-md-5 offset-md-3">
+          <form #f="ngForm"    (ngSubmit)="registrar(f)" >
+
+
+
+          
+
+
+           <div class="form-group">
+            <label  for="clientes">Propietario</label>
+              <p-dropdown name="propietarios" [options]="propietarios" name="propietarios"  [(ngModel)]="model.PropietarioId"  required
+              scrollHeight="40vh" class="input-form-field  col-md-12"  (onChange)="onChangePropietario($event)"   [style]="{'width':'100%'}"  [resetFilterOnHide]="false" 
+              [hideTransitionOptions]="'0ms'"
+              [showTransitionOptions]="'0ms'" 
+              placeholder="seleccione un propietario"  
+              filter="false">
+                  <ng-template let-item pTemplate="selectedItem">
+                      <span style="vertical-align:left;">{{item.label}}</span>
+                  </ng-template>
+                </p-dropdown>
+           </div> 
+
+      
+             
+             <div class="form-group">
+              <label for="fechaesperada">Fecha de requerida</label>
+              <p-calendar required name="FechaRequerida"  baseZIndex=100 class="input-form-field col-md-3"  [(ngModel)]="model.FechaRequerida"  [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+           </div>
+
+
+ 
+
+             <div class="form-group">
+              <label  for="HoraRequerida">Hora requerida</label>
+              <input pInputText type="text" size="15" name="HoraEsperada" aria-label="12hr format" required class="form-control col-md-12"  #HoraEsperada="ngModel"  [style]="{'width':'100%'}"  [(ngModel)]="model.HoraRequerida"  [ngxTimepicker]="default" >                
+              <ngx-material-timepicker #default></ngx-material-timepicker>
+          </div>
+
+          
+
+            
+           <div class="form-group">
+            <label  for="clientes">Cliente</label>
+              <p-dropdown name="clientes" [options]="clientes" name="clientes"  [(ngModel)]="model.ClienteId"  required
+              scrollHeight="40vh" class="input-form-field  col-md-12"  (onChange)="onChangeCliente($event)"   [style]="{'width':'100%'}"  [resetFilterOnHide]="false" 
+              [hideTransitionOptions]="'0ms'"
+              [showTransitionOptions]="'0ms'" 
+              placeholder="seleccione un cliente destino"  
+              filter="false">
+                  <ng-template let-item pTemplate="selectedItem">
+                      <span style="vertical-align:left;">{{item.label}}</span>
+                  </ng-template>
+                </p-dropdown>
+        </div> 
+
+          <div class="form-group">
+            <label  for="clientes">Dirección Entrega</label>
+              <p-dropdown name="direcciones" [options]="direcciones" name="direcciones"  [(ngModel)]="model.DireccionId"  required
+              scrollHeight="40vh" class="input-form-field  col-md-12"   [style]="{'width':'100%'}"  [resetFilterOnHide]="false" 
+              [hideTransitionOptions]="'0ms'"
+              [showTransitionOptions]="'0ms'" 
+              placeholder="seleccione una dirección de entrega"  
+              filter="false">
+                  <ng-template let-item pTemplate="selectedItem">
+                      <span style="vertical-align:left;">{{item.label}}</span>
+                  </ng-template>
+                </p-dropdown>
+        </div> 
+
+              
+       
+    
+
+      
+
+
+    
+   
+          
+
+            <div class="row pt-2 pt-sm-5 mt-1">
+                <div class="col-sm-6 pl-0">
+                  <p class="text-right">
+                    <button  [disabled]="!f.valid" class="btn btn-space btn-primary" type="submit">Guardar</button>
+                    <button  [routerLink]="['/pedido/listadopedido']" routerLinkActive="router-link-active"  class="btn btn-space btn-secondary">Cancel</button>
+                  </p>
+                </div>
+              </div>
+              
+     
+           
+          </form>
+        </div>
+        </div>
+      </div>
+  
+
+
+    </div>
+  </div>
+ 
+
+</div>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>

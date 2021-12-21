@@ -1,0 +1,118 @@
+<div class="light-font">
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb primary-color">
+  <li class="breadcrumb-item" [routerLink]="['/recibo/listaordenrecibo']">Lista de Tarifas</li>
+  <li class="breadcrumb-item active">Nueva Tarifa</li>
+</ol>
+</nav> 
+</div>
+
+  <div class="main-content container-fluid">
+  
+
+        <div class="offset-3 col-6">
+        <div class="card card-border-color card-border-color-primary">
+          <div class="card-header ">Nueva Tarifa<span class="card-subtitle"> Datos para la nueva tarifa</span></div>
+          <div class="card-body ">
+            <form #f="ngForm"  (ngSubmit)="registrar(f)" >
+
+              <div class="form-group">
+                <label  for="clientes">Propietario</label>
+                  <p-dropdown name="clientes" [options]="clientes"  name="clientes"  [(ngModel)]="model.PropietarioId"  required
+                  scrollHeight="40vh" class="input-form-field  col-md-12"    [style]="{'width':'100%'}"   [resetFilterOnHide]="false" 
+                  [hideTransitionOptions]="'0ms'"
+                  [showTransitionOptions]="'0ms'" 
+                  (onChange)="onChange($event)"
+                  placeholder="SELECCIONE UN PROPIETARIO"  
+                  filter="false">
+                      <ng-template let-item pTemplate="selectedItem">
+                          <span style="vertical-align:left;">{{item.label}}</span>
+                      </ng-template>
+                    </p-dropdown>
+              </div> 
+              <div class="form-group">
+                <label  for="clientes">Familia</label>
+                  <p-dropdown name="familia" [options]="familia" name="familia"  [(ngModel)]="model.familiaid"  required
+                  scrollHeight="40vh" class="input-form-field  col-md-12"    [style]="{'width':'100%'}"   [resetFilterOnHide]="false" 
+                  [hideTransitionOptions]="'0ms'"
+                  [showTransitionOptions]="'0ms'" 
+                  placeholder="SELECCIONE UNA FAMILIA"  
+                  filter="false">
+                      <ng-template let-item pTemplate="selectedItem">
+                          <span style="vertical-align:left;">{{item.label}}</span>
+                      </ng-template>
+                    </p-dropdown>
+              </div> 
+
+              <div class="form-group">
+                <label  for="clientes">Producto</label>
+                  <p-dropdown name="productos" [options]="productos" name="productos"  [(ngModel)]="model.ProductoId"  
+                  scrollHeight="40vh" class="input-form-field  col-md-12"    [style]="{'width':'100%'}"   [resetFilterOnHide]="false" 
+                  [hideTransitionOptions]="'0ms'"
+                  [showTransitionOptions]="'0ms'" 
+                  placeholder="TODOS LOS PRODUCTOS"  
+                  filter="false">
+                      <ng-template let-item pTemplate="selectedItem">
+                          <span style="vertical-align:left;">{{item.label}}</span>
+                      </ng-template>
+                    </p-dropdown>
+              </div> 
+
+
+              <div class="form-group">
+                <label  for="clientes">Unidad de Medida</label>
+                  <p-dropdown name="unidadMedida" [options]="unidadMedida" name="unidadMedida"  [(ngModel)]="model.UnidadMedidaId"  required
+                  scrollHeight="40vh" class="input-form-field  col-md-12"    [style]="{'width':'100%'}"   [resetFilterOnHide]="false" 
+                  [hideTransitionOptions]="'0ms'"
+                  [showTransitionOptions]="'0ms'" 
+                  placeholder="SELECCIONE UNA UNIDAD DE MEDIDA"  
+                  filter="false">
+                      <ng-template let-item pTemplate="selectedItem">
+                          <span style="vertical-align:left;">{{item.label}}</span>
+                      </ng-template>
+                    </p-dropdown>
+              </div> 
+              <div class="form-group">
+                <label  for="clientes">Tipo de Tarifa</label>
+                  <p-dropdown name="tipotarifa" [options]="tipotarifa" name="tipotarifa"  [(ngModel)]="model.TipoTarifaId"  required
+                  scrollHeight="40vh" class="input-form-field  col-md-12"    [style]="{'width':'100%'}"   [resetFilterOnHide]="false" 
+                  [hideTransitionOptions]="'0ms'"
+                  [showTransitionOptions]="'0ms'" 
+                  placeholder="SELECCIONE UN TIPO DE TARIFA"  
+                  filter="false">
+                      <ng-template let-item pTemplate="selectedItem">
+                          <span style="vertical-align:left;">{{item.label}}</span>
+                      </ng-template>
+                    </p-dropdown>
+              </div> 
+
+
+              <div class="form-group">
+                <label  for="MontoTarifa">Costo </label>
+                  <input pInputText class="form-control" autocomplete="off"  appTwoDigitDecimaNumber required  [(ngModel)]="model.MontoTarifa" #MontoTarifa="ngModel"  name="MontoTarifa" type="number">
+              </div>
+             
+
+              <div class="row pt-2 pt-sm-5 mt-1">
+                  <div class="col-sm-6 pl-0">
+                    <p class="text-right">
+                      <button  [disabled]="!f.valid" class="btn btn-space btn-primary" type="submit">Guardar</button>
+                      <button  [routerLink]="['/facturacion/gestiontarifario']" routerLinkActive="router-link-active"  class="btn btn-space btn-secondary">Cancel</button>
+                    </p>
+                  </div>
+                </div>
+                
+       
+             
+            </form>
+          </div>
+          </div>
+        </div>
+
+
+  
+      
+   
+
+</div>
+  

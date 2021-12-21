@@ -1,0 +1,147 @@
+
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb primary-warning">
+      <li class="breadcrumb-item">Órdenes de Salida</li>
+      <li class="breadcrumb-item active">Editar Órden de Salida</li>
+    </ol>
+  </nav>
+<div class="main-content container-fluid">
+
+
+    <div class="col-md-12">
+      <div class="card card-border-color card-border-color-danger">
+        <div class="card-header card-header-divider">Nueva Orden de Salida<span class="card-subtitle"> Datos de cabecera de la orden de salida</span></div>
+        <div class="card-body ">
+
+          
+          <div class="ui-g ui-fluid">
+            <div class="col-md-5 offset-md-3">
+          <form #f="ngForm"  (ngSubmit)="registrar(f)" >
+
+
+
+            <div class="form-group">
+              <label for="almacenes">Almacén:</label>
+              <p-dropdown name="almacenes" [options]="almacenes" name="almacenes" [(ngModel)]="model.almacenId"  required
+              scrollHeight="40vh" class="input-form-field  col-sm-5"  required   [style]="{'width':'100%'}"   [resetFilterOnHide]="false" 
+              [hideTransitionOptions]="'0ms'"
+              [showTransitionOptions]="'0ms'" 
+              placeholder="seleccione un almacen"  
+              filter="false">
+                  <ng-template let-item pTemplate="selectedItem">
+                      <span style="vertical-align:left;">{{item.label}}</span>
+                  </ng-template>
+                </p-dropdown>
+           </div>
+
+
+
+           <div class="form-group">
+            <label  for="clientes">Propietario</label>
+              <p-dropdown name="propietarios" [options]="propietarios" name="propietarios"  [(ngModel)]="model.propietarioId"  required
+              scrollHeight="40vh" class="input-form-field  col-md-12"  (onChange)="onChangePropietario($event)"   [style]="{'width':'100%'}"   [resetFilterOnHide]="false" 
+              [hideTransitionOptions]="'0ms'"
+              [showTransitionOptions]="'0ms'" 
+              placeholder="seleccione un propietario"  
+              filter="false">
+                  <ng-template let-item pTemplate="selectedItem">
+                      <span style="vertical-align:left;">{{item.label}}</span>
+                  </ng-template>
+                </p-dropdown>
+           </div> 
+
+      
+             
+             <div class="form-group">
+              <label for="fechaesperada">Fecha de requerida</label>
+              <p-calendar required name="FechaRequerida"  baseZIndex=100 class="input-form-field col-md-3"  [(ngModel)]="model.fechaRequerida"  [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+           </div>
+
+
+ 
+
+             <div class="form-group">
+              <label  for="HoraRequerida">Hora requerida</label>
+              <input pInputText type="text" size="15" name="horaRequerida" aria-label="12hr format" required class="form-control col-md-12"  #horaRequerida="ngModel"  [style]="{'width':'100%'}"  [(ngModel)]="model.horaRequerida"  [ngxTimepicker]="default" >                
+              <ngx-material-timepicker #default></ngx-material-timepicker>
+          </div>
+
+          
+
+            
+           <div class="form-group">
+            <label  for="clientes">Cliente</label>
+              <p-dropdown name="clientes" [options]="clientes" name="clientes"  [(ngModel)]="model.clienteId"  required
+              scrollHeight="40vh" class="input-form-field  col-md-12"  (onChange)="onChangeCliente($event)"   [style]="{'width':'100%'}"   [resetFilterOnHide]="false" 
+              [hideTransitionOptions]="'0ms'"
+              [showTransitionOptions]="'0ms'" 
+              placeholder="seleccione un propietario"  
+              filter="false">
+                  <ng-template let-item pTemplate="selectedItem">
+                      <span style="vertical-align:left;">{{item.label}}</span>
+                  </ng-template>
+                </p-dropdown>
+        </div> 
+
+          <div class="form-group">
+            <label  for="clientes">Dirección Entrega</label>
+              <p-dropdown name="direcciones" [options]="direcciones" name="direcciones"  [(ngModel)]="model.direccionId"  required
+              scrollHeight="40vh" class="input-form-field  col-md-12"   [style]="{'width':'100%'}"   [resetFilterOnHide]="false" 
+              [hideTransitionOptions]="'0ms'"
+              [showTransitionOptions]="'0ms'" 
+              placeholder="seleccione una dirección"  
+              filter="false">
+                  <ng-template let-item pTemplate="selectedItem">
+                      <span style="vertical-align:left;">{{item.label}}</span>
+                  </ng-template>
+                </p-dropdown>
+        </div> 
+
+
+
+              <div class="form-group">
+                <label for="guiaremision">OC del Cliente</label>
+                <input pInputText  minlength="5" maxlength="12" class="form-control col-md-12"  autocomplete="off" [(ngModel)]="model.ordenCompraCliente" name="OrdenCompraCliente" #OrdenCompraCliente="ngModel" type="text">
+                <div class="alert alert-danger" *ngIf="OrdenCompraCliente.errors"> 
+                  <div *ngIf="OrdenCompraCliente.errors.minlength">
+                  Debe tener mas de 5 caracteres.
+                </div>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label for="guiaremision">Guía de Remisión</label>
+              <input pInputText  minlength="5" maxlength="12" class="form-control col-md-12"  autocomplete="off" [(ngModel)]="model.guiaRemision" name="guiaremision" #guiaremision="ngModel" type="text">
+              <div class="alert alert-danger" *ngIf="OrdenCompraCliente.errors"> 
+                <div *ngIf="OrdenCompraCliente.errors.minlength">
+                Debe tener mas de 5 caracteres.
+              </div>
+            </div>
+          </div>
+            
+          
+
+            <div class="row pt-2 pt-sm-5 mt-1">
+                <div class="col-sm-6 pl-0">
+                  <p class="text-right">
+                    <button  [disabled]="!f.valid" class="btn btn-space btn-primary" type="submit">Actualizar</button>
+                    <button  [routerLink]="['/picking/listaordensalida']" routerLinkActive="router-link-active"  class="btn btn-space btn-secondary">Cancel</button>
+                  </p>
+                </div>
+              </div>
+              
+     
+           
+          </form>
+        </div>
+        </div>
+      </div>
+  
+
+
+    </div>
+  </div>
+ 
+
+</div>

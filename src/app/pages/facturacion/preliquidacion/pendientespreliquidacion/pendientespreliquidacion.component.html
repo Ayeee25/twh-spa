@@ -1,0 +1,156 @@
+
+<div class="page-head">
+  <h2 class="page-head-title">Liquidación de Servicio</h2>
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb page-head-nav">
+      <li class="breadcrumb-item"><a href="#">Liquidación de servicio por Propietario</a></li>
+      <!-- <li class="breadcrumb-item">Listado de Órdenes de Recibo</li>
+      <li class="breadcrumb-item active">Identificar Pallets</li> -->
+    </ol>
+  </nav>
+</div>
+
+<div class="main-content container-fluid">
+
+      <div class="col-md-12">
+    <div class="card card-border-color card-border-color-warning">
+        <div class="card-header">
+                  <b> Filtro de búsqueda  </b>  
+            </div>
+        <div class="card-body">
+            <div class="  row">
+          
+                <div class="col-md-4">
+                    <label class="col-form-label text-sm-right" for="username">Propietario:</label>
+                    
+                    <mat-form-field class="input-form-field  col-sm-8 ">
+                        <mat-select [formControl]="ClientesCtrl" [(value)]="model.PropietarioId" >
+                         <mat-option>
+                            
+                          </mat-option>
+                          <mat-option  *ngFor="let pow of filteredClientes  | async"  [value]="pow.val">
+                              {{pow.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                  </div>
+
+                <div class="col-md-4">
+                    <label class="col-12 col-sm-3 col-form-label text-sm-right" for="FechaEsperada">F. Inicio</label>
+                    <mat-form-field class="input-form-field col-12 col-sm-8 col-lg-6">
+                        <input matInput required type="datetime" [matDatepicker]="picker" autocomplete="off" [(ngModel)]="model.FechaInicio" name="FechaInicio" #FechaInicio="ngModel" >
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+               </div>
+
+               <div class="col-md-4">
+                <label class="col-12 col-sm-3 col-form-label text-sm-right" for="FechaEsperada">F. Fin</label>
+                <mat-form-field class="input-form-field col-12 col-sm-8 col-lg-6">
+                    <input matInput required type="datetime" [matDatepicker]="picker1" autocomplete="off" [(ngModel)]="model.FechaFin" name="FechaFin" #FechaFin="ngModel" >
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+               </div>
+                   
+                 
+  
+                <div class="col-md-3">
+                   <button class="btn btn-block btn-warning"  (click)="buscar()"  type="button">Buscar</button>
+                </div>
+             
+              </div>
+        </div>
+    </div>
+
+  </div>
+<div class="col-md-12">
+   
+
+
+  <div class="card card-border-color card-border-color-warning">
+    <div class="card-header">
+          <div>
+              <b> Liquidación  </b> <span class="card-subtitle">  Liquidación de servicio por producto  </span>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-1">
+              
+            </div>
+        <div  class="col-md-3">
+            <button type="button" [swal]='confirmarSwal' ngbTooltip="Generar"  (confirm)="generar()" class="btn btn-block btn-primary"><i class="fa fa-folder"></i> Generar Liquidación</button>
+        </div>
+        <div  class="col-md-3">
+          <button type="button"  ngbTooltip="Preliminar"  (click)="preliminar()" class="btn btn-block btn-primary"><i class="fa fa-folder"></i> Vista preliminar</button>
+      </div>
+      </div>
+      <div class="card-body">
+          
+          <div  class="example-container">
+    <div class="container">
+      <p-table [style]="{width:'100%'}" 
+      [scrollable]="true" [columns]="columnDefinitions" [value]="ordenes"
+      #dt [paginator]="true"  
+      [rows]="40" [resizableColumns]="true" selectionMode="multiple" [responsive]="true"  >
+
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+              <col *ngFor="let col of columns"   [ngStyle]="{'width': col.width}" >
+          </colgroup>
+      </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+              <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                  {{col.header}}
+                  <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+              </th>
+          </tr>
+      </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr  [pSelectableRow]="rowData">
+              
+              <td class="ui-resizable-column"> {{rowData.producto  }}</td>
+              <td class="ui-resizable-column"> {{rowData.in}} </td>
+              <td class="ui-resizable-column"> {{rowData.out}} </td>
+              <td class="ui-resizable-column"> {{rowData.posTotal  }} </td>
+              <td class="ui-resizable-column"> {{rowData.seguro  }} </td>
+              <td class="ui-resizable-column"> {{rowData.seguro  }} </td>
+              <td class="ui-resizable-column"> {{rowData.seguro  }} </td>
+              <td class="ui-resizable-column"> {{rowData.total  }} </td>
+              
+              
+              
+          </tr>
+          </ng-template>
+          <ng-template pTemplate="summary">
+           TOTAL A COBRAR {{ this.sum | number:'1.0-2' }} 
+        </ng-template>
+      </p-table>
+
+      
+        </div>
+ 
+      </div> 
+    </div>
+   
+  </div>
+</div>
+
+
+</div>
+
+<swal
+  #confirmarSwal
+  title="Confirmar Generación"
+  text="¿Esta seguro que desea generar la liquidación?"
+  type="question"
+
+  
+  >
+</swal>
+
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+
+

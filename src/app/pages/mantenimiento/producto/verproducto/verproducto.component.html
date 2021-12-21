@@ -1,0 +1,127 @@
+<div class="page-head">
+  <h2 class="page-head-title">Mantenimiento de Producto del Sistema</h2>
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb page-head-nav">
+      <li class="breadcrumb-item"><a href="#">Mantenimiento</a></li>
+      <li class="breadcrumb-item"><a [routerLink]="['/mantenimiento/listadoproducto']" routerLinkActive="router-link-active" >Listado de Productos</a></li>
+      <li class="breadcrumb-item active">Huellas Producto</li>
+    </ol>
+  </nav>
+</div>
+<div class="main-content container-fluid">
+<div class="row">
+  
+    <div class="col-md-4">
+      <div class="card card-border-color card-border-color-primary">
+          <div class="card-header card-header-divider">Producto
+               <span class="card-subtitle">Datos generales</span>
+          </div> 
+        <div class="card-body">
+          <form #f="ngForm" >
+              <div class="timeline-avatar"><img class="circle" src="assets/img/Product_icon.png" alt="Avatar"></div>
+              <div class="timeline-header"><span class="timeline-autor"> {{ model.descripcionLarga }}  </span>
+                <p class="timeline-activity">Familia <a href="#">{{ model.familia }}</a>.</p><span class="timeline-time">SKU -  {{ model.codigo }}</span>
+              </div>
+        
+              <div class="be-booking-desc">
+                  <h4 class="be-booking-desc-title"> <button  [disabled]="!f.valid" class="btn btn-space btn-primary" type="submit">Editar</button></h4><span class="be-booking-desc-details">Puede editar los datos completos del producto en la sección de edición de la gestión del producto.</span>
+                </div>
+              <div class="form-group pt-2">
+                  <label for="descripcion">Peso</label>
+                    <input class="form-control" readonly  [(ngModel)]="model.peso"   name="peso" type="text">
+                </div>
+                <div class="form-group pt-2">
+                    <label for="descripcion">Unidad de Medida</label>
+                      <input class="form-control" readonly  [(ngModel)]="model.unidadMedida"   name="UnidadMedida" type="text">
+                  </div>
+              
+          </form>
+        </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card card-border-color card-border-color-primary">
+          <div class="card-header card-header-divider">Huellas<span class="card-subtitle">Listado de Huellas registradas para el producto</span>  <div class="form-group pt-2">
+            <button class="btn btn-primary" (click)="nuevoDialog(id)" type="button"> Nueva Huella </button>
+          </div></div>
+          <div class="card-body ">
+              <div class="main-content container-fluid">
+                  <div class="row">
+
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card card-table">
+                        <div class="card-body">
+                          <div class="table-responsive noSwipe">
+                            <table class="table table-striped table-hover">
+                              <thead>
+                                <tr>
+                                  <th style="width:20%;">Huella</th>
+                                  <th style="width:40%;">Cama</th>
+                                  <th style="width:40%;">% Uso</th>
+                                  <th style="width:40%;">Código</th>
+                                  <th style="width:40%;">Creación</th>
+                                  <th style="width:20%;"></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                                <tr *ngFor="let huella of huellas">
+                          
+                                  <td class="user-avatar cell-detail user-info"><img src="assets/img/pallet.png" alt="Avatar"><span>{{huella.codigoHuella}}</span><span class="cell-detail-description">Huella</span></td>
+                                  <td class="cell-detail"> <span>{{huella.caslvl}}</span><span class="cell-detail-description">Base de pallet</span></td>
+                                  <td class="milestone"><span class="completed">{{huella.cantidad}} %</span><span class="version"> 0 </span>
+                                    <div class="progress">
+                                      <div class="progress-bar progress-bar-primary" [style.width]="huella.cantidad+'%'"   ></div>
+                                    </div>
+                                  </td>
+                                  <td class="cell-detail"><span>master</span><span class="cell-detail-description">63e8ec3</span></td>
+                                  <td class="cell-detail"><span>{{huella.fechaRegistro}}</span><span class="cell-detail-description">8:30</span></td>
+                                  <td class="text-right">
+                                    <div class="btn-group btn-hspace">
+                                      <button class="btn btn-secondary" (click)="openDialog(huella.id)" type="button"> Editar </button>
+                                      <button class="btn btn-secondary" (click)="nuevahuella(huella.id)" type="button"> Ver </button>
+                                     
+                                    </div>
+                                  </td>
+                                </tr>
+                                <!-- <tr class="primary">
+                         
+                                  <td class="user-avatar cell-detail user-info"><img src="assets/img/pallet.jpg" alt="Avatar"><span>Benji Harper</span><span class="cell-detail-description">Designer</span></td>
+                                  <td class="cell-detail"> <span>Main structure markup</span><span class="cell-detail-description">CLI Connector</span></td>
+                                  <td class="milestone"><span class="completed">22 / 30</span><span class="version">v1.1.5</span>
+                                    <div class="progress">
+                                      <div class="progress-bar progress-bar-primary" style="width: 75%;"></div>
+                                    </div>
+                                  </td>
+                                  <td class="cell-detail"><span>develop</span><span class="cell-detail-description">4cc1bc2</span></td>
+                                  <td class="cell-detail"><span>April 22, 2018</span><span class="cell-detail-description">14:45</span></td>
+                                  <td class="text-right">
+                                    <div class="btn-group btn-hspace">
+                                      <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Open <span class="icon-dropdown mdi mdi-chevron-down"></span></button>
+                                      <div class="dropdown-menu" role="menu"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a>
+                                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Separated link</a>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr> -->
+              
+
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+
+
+

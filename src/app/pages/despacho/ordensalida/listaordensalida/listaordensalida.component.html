@@ -1,0 +1,180 @@
+
+<!-- <div class="page-head">
+  <h2 class="page-head-title">Listado de Órdenes de Salida</h2>
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb page-head-nav">
+      <li class="breadcrumb-item"><a href="#">Ordenes de Salida</a></li>
+      <!-- <li class="breadcrumb-item">Listado de Órdenes de Recibo</li>
+      
+    </ol>
+  </nav>
+</div> -->
+
+
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb primary-warning">
+      <li class="breadcrumb-item active">Órdenes de Salida</li>
+    </ol>
+  </nav>
+
+
+
+<div class="main-content container-fluid">
+
+  <div class="col-md-12">
+    <div class="card card-border-color card-border-color-danger">
+        <div class="card-header">
+                  <b> Filtro de búsqueda  </b>  
+            </div>
+        <div class="card-body">
+            <div class="row">
+          
+              <div class="col-md-3">
+                <h5>Almacén :</h5>
+                <p-dropdown name="almacenes" [options]="almacenes" name="almacenes" [(ngModel)]="model.AlmacenId"  required
+                    scrollHeight="40vh" class="input-form-field"  required   [style]="{'width':'100%'}"   [resetFilterOnHide]="false" 
+                    [hideTransitionOptions]="'0ms'"
+                    [showTransitionOptions]="'0ms'" 
+                    placeholder="seleccione un almacén"  
+                    filter="false">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span style="vertical-align:left;">{{item.label}}</span>
+                        </ng-template>
+                  </p-dropdown>
+             </div>
+                
+                <div class="col-md-2">
+                <h5>Propietario :</h5>
+                <p-dropdown  [options]="clientes"  [(ngModel)]="model.PropietarioId" 
+                scrollHeight="40vh" class="input-form-field"    [style]="{'width':'80%'}"   [resetFilterOnHide]="false" 
+                [hideTransitionOptions]="'0ms'"
+                [showTransitionOptions]="'0ms'" 
+                placeholder="seleccione un cliente"  
+                filter="true">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:left;">{{item.label}}</span>
+                    </ng-template>
+                
+                  </p-dropdown>
+                </div>
+                <div class="col-md-2">
+                <h5>Inicio:</h5>
+                <p-calendar [(ngModel)]="dateInicio" baseZIndex=100 [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+                </div>
+                <div class="col-md-2">
+                <h5>Fin:</h5>
+                <p-calendar [(ngModel)]="dateFin"  baseZIndex=100  [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+                </div>
+
+
+                <div class="col-md-2">
+                  <h5>Estado :</h5>
+                    <p-dropdown [options]="estados"  [(ngModel)]="model.estadoIdfiltro" 
+                    scrollHeight="40vh" class="input-form-field  col-sm-5"    [style]="{'width':'100%'}"    
+                    [hideTransitionOptions]="'0ms'"
+                    [showTransitionOptions]="'0ms'" 
+                    placeholder="seleccione un estado"  
+                    >
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span style="vertical-align:middle;">{{item.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+              </div>
+                <div class= "mt-3 offset-10 col-md-2 ">
+               
+                      <button class="btn btn-block btn-primary"  (click)="buscar()"  type="button">Buscar</button>
+                   
+                </div>
+       
+             
+            
+        </div>
+    </div>
+  </div>
+<div class="col-md-12">
+
+
+  <div class="card card-border-color card-border-color-danger">
+    <div class="card-header">
+          <div  [hidden]="!checkSelects()">
+              <b> Órdenes de Salida  </b> <span class="card-subtitle">   Listado de ordenes de salida del sistema</span>
+          </div>
+          <div  [hidden]="checkSelects()" >
+              <b> Órdenes seleccionadas  :  {{selection.selected.length}} </b> 
+          </div>
+      </div>
+     
+
+ 
+    <div class="card-body">
+        <div  class="example-container">
+          <button mat-fab ngbTooltip="Nueva Orden de Salida" color="primary"  routerLink="/picking/nuevaordensalida"> <i aria-hidden="true" class="fa fa-plus fa-1x"></i></button> 
+     
+
+            <p-table [style]="{width:'100%'}" 
+          [scrollable]="true" [columns]="cols" [value]="ordenes"
+          [(selection)]="selectedRow"  #dt [paginator]="true"  
+          [rows]="40" [resizableColumns]="true" selectionMode="multiple" [responsive]="true"  >
+
+            <ng-template pTemplate="colgroup" let-columns>
+              <colgroup>
+                  <col *ngFor="let col of columns"   [ngStyle]="{'width': col.width}" >
+              </colgroup>
+          </ng-template>
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                  <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                      {{col.header}}
+                      <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                  </th>
+              </tr>
+          </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr  [pSelectableRow]="rowData">
+                  <td class="ui-resizable-column">  
+                    <div class="ui-inputgroup">
+                      <!-- <button class="ui-button-secondary" type="button"  pButton (click)="ver(rowData.id)" icon="fa fa-search"></button> -->
+                      <!-- <button class="ui-button-secondary" type="button"  pButton (click)="eliminar(rowData.id)" icon="fa fa-trash"></button> -->
+                      <button  class="btn btn-sm btn-primary"  (click)="edit(rowData.ordenSalidaId)" type="button"><i class="fa fa-edit"></i></button>
+                      <button  class="btn btn-sm btn-danger"  [swal]="deleteSwal" (confirm)="delete(rowData.ordenSalidaId)"  [disabled]="rowData.nombreEstado != 'Creado'"  type="button"><i class="fa fa-trash"></i></button>
+                      <button  class="btn btn-sm btn-success" (click)="ver(rowData.ordenSalidaId)" type="button"><i class="fa  fa-search"></i></button>
+                    </div>
+                </td>
+                  
+                  <td class="ui-resizable-column"> {{rowData.numOrden  }}</td>
+                  <td class="ui-resizable-column"> {{rowData.propietario}} </td>
+                  <td  [ngClass]="rowData.nombreEstado == 'Almacenado' ? 'old-car' :  (rowData.nombreEstado == 'Asignado'?'very-old-car': null) "> {{rowData.nombreEstado}}</td>
+                  <td class="ui-resizable-column"> {{rowData.guiaRemision  }} </td>
+                  
+                  <td class="ui-resizable-column"> {{rowData.equipotransporte  }} ( {{ rowData.placa }} ) </td>
+                  <td [ngClass]="rowData.tipoRegistro === 'CLIENTE' ? 'very-old-car' : 'old-car' " > {{ rowData.tipoRegistro  }} </td>
+                  <td class="ui-resizable-column"> {{rowData.fechaRequerida | date: 'dd/MM/yyyy'}} {{rowData.horaRequerida  }}</td>
+                  <!-- <td class="ui-resizable-column"> {{rowData.horaEsperada  }} </td> -->
+                  <td class="ui-resizable-column"> {{rowData.fechaRegistro | date: 'dd/MM/yyyy'}}</td>
+                                    
+                  
+              </tr>
+              </ng-template>
+
+          </p-table>
+
+          </div> 
+        
+    </div>
+   
+  </div>
+</div>
+
+
+</div>
+
+<swal
+  #deleteSwal
+  title="Eliminar la Orden"
+  text="¿Esta seguro que desea eliminar la orden?"
+  type="question"
+  showCancelButton= true>
+</swal>
+
+

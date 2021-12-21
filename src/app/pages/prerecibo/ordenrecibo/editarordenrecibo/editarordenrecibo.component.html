@@ -1,0 +1,102 @@
+
+
+
+ <div class="page-head">
+  <h2 class="page-head-title">Órdenes de Recibo</h2>
+ <nav aria-label="breadcrumb" role="navigation">
+   <ol class="breadcrumb page-head-nav">
+    <ol class="breadcrumb page-head-nav">
+      <li class="breadcrumb-item"> Recibo</li>
+      <li class="breadcrumb-item" [routerLink]="['/recibo/listaordenrecibo']">Órdenes de Recibo</li>
+      <li class="breadcrumb-item active">Editar Orden de Recibo</li>
+    </ol>
+   </ol>
+ </nav>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="main-content container-fluid">
+
+
+    <div class="col-md-12">
+      <div class="card card-border-color card-border-color-primary">
+        <div class="card-header">Editar Orden de Recibo<span class="card-subtitle"> Datos de cabecera de la orden de recibo</span></div>
+        <div class="card-body ">
+
+          <div class="ui-g ui-fluid">
+            <div class="col-md-5 offset-md-3">
+          <form #f="ngForm"  (ngSubmit)="registrar(f)" >
+
+
+            <div class="form-group">
+              <label for="almacenes">Almacén:</label>
+              <p-dropdown name="almacenes" [options]="almacenes" name="almacenes" [(ngModel)]="model.AlmacenId"  required
+              scrollHeight="40vh" class="input-form-field  col-sm-5"  required   [style]="{'width':'100%'}"  [resetFilterOnHide]="false" 
+              [hideTransitionOptions]="'0ms'"
+              [showTransitionOptions]="'0ms'" 
+              placeholder="seleccione un almacen"  
+              filter="false">
+                  <ng-template let-item pTemplate="selectedItem">
+                      <span style="vertical-align:left;">{{item.label}}</span>
+                  </ng-template>
+                </p-dropdown>
+            </div>
+ 
+
+            <div class="form-group">
+              <label  for="clientes">Propietario</label>
+                <p-dropdown name="clientes" [options]="clientes" name="clientes"  [(ngModel)]="model.PropietarioId"  required
+                scrollHeight="40vh" class="input-form-field  col-md-12"    [style]="{'width':'100%'}"  [resetFilterOnHide]="false" 
+                [hideTransitionOptions]="'0ms'"
+                [showTransitionOptions]="'0ms'" 
+                placeholder="seleccione un propietario"  
+                filter="false">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <span style="vertical-align:left;">{{item.label}}</span>
+                    </ng-template>
+                  </p-dropdown>
+            </div> 
+
+
+             <div class="form-group"> 
+              <label for="fechaesperada">Fecha Esperada</label>
+              <p-calendar required name="fechaesperada"    baseZIndex=100 class="input-form-field col-md-3"  [(ngModel)]="model.FechaEsperada"  [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+           </div>
+
+           <div class="form-group">
+              <label  for="HoraEsperada">Hora de llegada</label>
+              <input pInputText type="text" size="15" name="HoraEsperada" aria-label="12hr format" required class="form-control col-md-12"  #HoraEsperada="ngModel"  [style]="{'width':'100%'}"  [(ngModel)]="model.HoraEsperada"  [ngxTimepicker]="default" >                
+              <ngx-material-timepicker #default></ngx-material-timepicker>
+          </div>
+
+          <div class="form-group">
+              <label for="guiaremision">Guía de Remisión</label>
+              <input pInputText  minlength="5" maxlength="12" class="form-control col-md-12"  autocomplete="off" [(ngModel)]="model.guiaremision" name="guiaremision" #guiaremision="ngModel" type="text">
+          </div>
+            <div class="row pt-2 pt-sm-5 mt-1">
+                <div class="col-sm-6 pl-0">
+                  <p class="text-right">
+                    <button  [disabled]="!f.valid" class="btn btn-space btn-primary" type="submit">Actualizar</button>
+                    <button type="button" [routerLink]="['/recibo/listaordenrecibo']" routerLinkActive="router-link-active"  class="btn btn-space btn-secondary">Cancel</button>
+                  </p>
+                </div>
+              </div>
+          </form>
+        </div>
+      </div>
+        </div>
+      </div>
+  
+
+
+
+ 
+
+</div>

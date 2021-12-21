@@ -1,0 +1,34 @@
+<ejs-schedule  #schedule  width='100%' height='600px'
+ [eventSettings]="eventSettings"
+ [group]="group"
+
+
+ >
+
+ <e-views>
+  <e-view option="Day"></e-view>
+  <e-view option="WorkWeek"></e-view>
+  <e-view option="Month">
+      <ng-template #eventTemplate let-data>
+          <div class="subject">{{data.Subject}}</div>
+      </ng-template>
+  </e-view>
+  <e-view option="TimelineWeek"></e-view>
+</e-views>
+ <ng-template #resourceHeaderTemplate let-data>
+  <div class='template-wrap'>
+      <div class="resource-image {{getEmployeeImage(data)}}"></div>
+      <div class="resource-details">
+          <div class="resource-name">{{getEmployeeName(data)}}</div>
+          <div class="resource-designation">{{getEmployeeDesignation(data)}}</div>
+      </div>
+  </div>
+</ng-template>
+
+<e-resources>
+  <e-resource field='ConferenceId' title='Attendees' name='Conferences' [allowMultiple]=true [dataSource]='resourceDataSource'
+      textField='Text' idField='Id' colorField='Color'>
+  </e-resource>
+</e-resources>
+
+</ejs-schedule>
